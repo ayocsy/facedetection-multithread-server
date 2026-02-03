@@ -52,7 +52,3 @@ The system is written entirely in **C**, focusing on performance, memory control
 - Custom protocol design
 - Modular C code structure
 - Memory management
-
-
-```bash
-make
