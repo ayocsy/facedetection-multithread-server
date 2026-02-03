@@ -1,0 +1,238 @@
+URL to view log online:
+https://source.eait.uq.edu.au/viewvc/csse2310-2025-sem1/csse2310-s4862630/trunk/a4/?view=log
+
+Retrieving logs at Fri Jun 6 09:36:25 AEST 2025
+------------------------------------------------------------------------
+r1 | uqpsutto@uq.edu.au | 2025-03-04 20:35:40 +1000 (Tue, 04 Mar 2025) | 1 line
+Changed paths:
+   A /trunk
+   A /trunk/a4
+
+Initial repository structure
+
+
+------------------------------------------------------------------------
+r33 | s4862630@uq.edu.au | 2025-05-29 01:25:55 +1000 (Thu, 29 May 2025) | 1 line
+Changed paths:
+   A /trunk/a4/Makefile
+   A /trunk/a4/uqfaceclient.c
+
+Completed argument parsing, file validation, and server connection handling in uqfaceclient. Matches spec error messages and exit codes.
+
+Index: Makefile
+ Makefile |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+Index: uqfaceclient.c
+ uqfaceclient.c |  250 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 250 insertions(+)
+
+------------------------------------------------------------------------
+r34 | s4862630@uq.edu.au | 2025-06-01 17:58:51 +1000 (Sun, 01 Jun 2025) | 1 line
+Changed paths:
+   A /trunk/a4/protocol.c
+   A /trunk/a4/protocol.h
+   M /trunk/a4/uqfaceclient.c
+
+Implemented read_file_to_buffer() to load binary input images. Added protocol_pack_request() to construct messages per spec. Connected to server and sent request. Began response handling logic. Ensured memory is freed and file permissions are correct.
+
+Index: protocol.c
+ protocol.c |   41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+Index: protocol.h
+ protocol.h |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+Index: uqfaceclient.c
+ uqfaceclient.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 61 insertions(+), 5 deletions(-)
+
+------------------------------------------------------------------------
+r35 | s4862630@uq.edu.au | 2025-06-02 08:22:54 +1000 (Mon, 02 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/uqfaceclient.c
+
+Implemented handle_response() for parsing server responses and managing output or error messages. Integrated error message extraction with proper exit status and memory cleanup. Completed output image handling to file or stdout as specified.
+
+Index: uqfaceclient.c
+ uqfaceclient.c |  143 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 122 insertions(+), 21 deletions(-)
+
+------------------------------------------------------------------------
+r36 | s4862630@uq.edu.au | 2025-06-03 05:11:58 +1000 (Tue, 03 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/protocol.c
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfaceclient.c
+
+Fix critical use-after-free bug in build_image_process(); improve image buffer handling and memory safety.
+
+Index: protocol.c
+ protocol.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
+Index: protocol.h
+ protocol.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+Index: uqfaceclient.c
+ uqfaceclient.c |   42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
+
+------------------------------------------------------------------------
+r37 | s4862630@uq.edu.au | 2025-06-03 07:22:58 +1000 (Tue, 03 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/Makefile
+   A /trunk/a4/uqfacedetect.c
+
+Implemented command-line argument checking for uqfacedetect. Added temporary image file check for /tmp/imagefile.jpg with correct error handling. Updated Makefile to compile uqfacedetect.
+
+Index: Makefile
+ Makefile |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
+Index: uqfacedetect.c
+ uqfacedetect.c |  158 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 158 insertions(+)
+
+------------------------------------------------------------------------
+r38 | s4862630@uq.edu.au | 2025-06-04 04:48:20 +1000 (Wed, 04 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/Makefile
+   M /trunk/a4/protocol.c
+   M /trunk/a4/uqfacedetect.c
+
+Added port binding with ephemeral port support. Fixed invalid free issue by duplicating string literals. Server now listens correctly and prints port to stderr.
+
+Index: Makefile
+ Makefile |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+Index: protocol.c
+ protocol.c |    2 ++
+ 1 file changed, 2 insertions(+)
+Index: uqfacedetect.c
+ uqfacedetect.c |  116 ++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 110 insertions(+), 6 deletions(-)
+
+------------------------------------------------------------------------
+r39 | s4862630@uq.edu.au | 2025-06-04 18:12:04 +1000 (Wed, 04 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/Makefile
+   M /trunk/a4/protocol.c
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfacedetect.c
+
+Implemented initial server functionality for uqfacedetect.  Accepts client connections and spawns threads to handle each client. Handles unexpected protocol prefixes by sending the response file and closing the connection.
+
+Index: Makefile
+ Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Index: protocol.c
+ protocol.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+Index: protocol.h
+ protocol.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+Index: uqfacedetect.c
+ uqfacedetect.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 65 insertions(+), 5 deletions(-)
+
+------------------------------------------------------------------------
+r40 | s4862630@uq.edu.au | 2025-06-05 09:05:35 +1000 (Thu, 05 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/protocol.c
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfacedetect.c
+
+Added support for sending the response file on invalid prefixes and error messages for bad operation types and image sizes. Integrated send_error() and send_responsefile() functions. Began OpenCV-based face detection setup.
+
+Index: protocol.c
+ protocol.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+Index: protocol.h
+ protocol.h |    1 +
+ 1 file changed, 1 insertion(+)
+Index: uqfacedetect.c
+ uqfacedetect.c |  228 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 210 insertions(+), 18 deletions(-)
+
+------------------------------------------------------------------------
+r41 | s4862630@uq.edu.au | 2025-06-05 23:57:22 +1000 (Thu, 05 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/protocol.c
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfaceclient.c
+   M /trunk/a4/uqfacedetect.c
+
+Implemented protocol error handling including invalid prefix, invalid operation type, and invalid image cases.  Successfully tested that uqfacedetect correctly handles face detection requests from a single client. Refactored handle_client() with different seperate function
+
+Index: protocol.c
+ protocol.c |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 54 insertions(+), 7 deletions(-)
+Index: protocol.h
+ protocol.h |    3 +++
+ 1 file changed, 3 insertions(+)
+Index: uqfaceclient.c
+ uqfaceclient.c |   30 ------------------------------
+ 1 file changed, 30 deletions(-)
+Index: uqfacedetect.c
+ uqfacedetect.c |  455 ++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 243 insertions(+), 212 deletions(-)
+
+------------------------------------------------------------------------
+r42 | s4862630@uq.edu.au | 2025-06-06 01:52:30 +1000 (Fri, 06 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/uqfacedetect.c
+
+Resolved crash caused by freeing and reusing cascade classifiers in sequential face replacement. Updated implementation to preserve faceCascade and eyesCascade across multiple client requests, protected by mutex. Successfull handles face replacement requests from a single client.
+
+Index: uqfacedetect.c
+ uqfacedetect.c |  143 +++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 129 insertions(+), 14 deletions(-)
+
+------------------------------------------------------------------------
+r43 | s4862630@uq.edu.au | 2025-06-06 09:27:16 +1000 (Fri, 06 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/protocol.c
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfaceclient.c
+   A /trunk/a4/uqfaceclient.h
+   M /trunk/a4/uqfacedetect.c
+   A /trunk/a4/uqfacedetect.h
+
+Try to implement initial client connection limiting using semaphores. Refactored several functions for clarity and CSSE2310 style compliance. Added docstrings and inline comments throughout for documentation. Made the h file for uqfaceclient.c anf uqfacedetect.c.
+
+Index: protocol.c
+ protocol.c |  127 +++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 78 insertions(+), 49 deletions(-)
+Index: protocol.h
+ protocol.h |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+Index: uqfaceclient.c
+ uqfaceclient.c |  289 +++++++++++++++++++++++++--------------------------------
+ 1 file changed, 130 insertions(+), 159 deletions(-)
+Index: uqfaceclient.h
+ uqfaceclient.h |   71 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+Index: uqfacedetect.c
+ uqfacedetect.c |  544 ++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 310 insertions(+), 234 deletions(-)
+Index: uqfacedetect.h
+ uqfacedetect.h |  102 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+
+------------------------------------------------------------------------
+r44 | s4862630@uq.edu.au | 2025-06-06 09:31:30 +1000 (Fri, 06 Jun 2025) | 1 line
+Changed paths:
+   M /trunk/a4/protocol.h
+   M /trunk/a4/uqfaceclient.h
+   M /trunk/a4/uqfacedetect.h
+
+Forgot to check the header file style format. Fixed all the header file
+
+Index: protocol.h
+ protocol.h |   18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
+Index: uqfaceclient.h
+ uqfaceclient.h |  128 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 63 insertions(+), 65 deletions(-)
+Index: uqfacedetect.h
+ uqfacedetect.h |  176 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 88 insertions(+), 88 deletions(-)
+
+------------------------------------------------------------------------
